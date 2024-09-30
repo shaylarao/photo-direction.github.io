@@ -1,1 +1,41 @@
-Hello World
+<!DOCTYPE html>
+<html>
+<head>
+<title>Compass Direction</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+#compass {
+  font-size: 24px;
+  margin-top: 50px;
+}
+</style>
+</head>
+<body>
+
+<h1>Compass Direction</h1>
+<div id="compass">Waiting for compass data...</div>
+
+<script>
+if (window.DeviceOrientationEvent) {
+  window.addEventListener('deviceorientation', function(event) {
+    var compassHeading = event.alpha;
+    var direction = getCardinalDirection(compassHeading);
+    document.getElementById("compass").innerHTML = direction;
+  });
+} else {
+  document.getElementById("compass").innerHTML = "Compass not supported";
+}
+
+function getCardinalDirection(heading) {
+  var directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  var index = Math.round((heading % 360) / 45);
+  return directions[index % 8];
+}
+</script>
+
+</body>
+</html>
